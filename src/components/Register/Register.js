@@ -21,7 +21,7 @@ const Register = () => {
       .then(result =>{
          const user = result.user;
          console.log(user)
-         setUser(user);
+        //  setUser(user);
          // navigate('/');
       })
       .catch(err=>console.log(err))
