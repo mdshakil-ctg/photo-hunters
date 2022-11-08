@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
 import Logo from "../header/logo/logo.png"
+import { UserCircleIcon } from '@heroicons/react/24/solid';
 
 const Header = () => {
   const {user} =useContext(AuthContext);
@@ -29,9 +30,19 @@ const Header = () => {
       <li><Link to=''>Services</Link></li>
       <li><Link to=''>About Me</Link></li>
       <li><Link to='/blogs'>Blogs</Link></li>
-      <li><Link to='/login'><button className='btn btn-info'>Login</button></Link></li>
-      <li><Link to=''><button className='btn btn-info'>Sign out</button></Link></li>
+      {
+        user?.uid ? <li><Link to=''><button className='btn btn-info'>Sign out</button></Link></li> 
+        :
+        <li><Link to='/login'><button className='btn btn-info'>Login</button></Link></li>
+      }
+      
+      
     </ul>
+    <div>
+    {
+       user?.photoURL ? <img className='rounded-lg' src={user?.photoURL} style={{width:'30px'}} alt=''/>: <Link to='/blogs' className='text-decoration-none text-white'>  <UserCircleIcon className="h-6 w-6 mx-auto text-blue-500"/></Link>
+   }
+    </div>
   </div>
   <div className="navbar-end">
     <Link to='/' className="btn">Get started</Link>
