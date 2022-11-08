@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import HomeServices from "../homeServices/HomeServices";
 import { Link } from "react-router-dom";
 import About from "../About/About";
+import Features from "../Features/Features";
 
 const Home = () => {
   const [services, setServices] = useState([]);
@@ -27,6 +28,7 @@ const Home = () => {
         </Link>
       </div>
       <About></About>
+      <Features></Features>
     </div>
   );
 };
