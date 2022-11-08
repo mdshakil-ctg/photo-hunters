@@ -1,7 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/UserContext';
 
 const Login = () => {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || '/';
+  const {loginWithGoogle, loginWithGithub, signIn, logOut,} = useContext(AuthContext);
+
+  const [error, setError] = useState(null);
 
    const handleLogin =(event) =>{
       event.preventDefault();
@@ -11,18 +19,37 @@ const Login = () => {
       console.log(email, password);
   
   
-      // signIn(email, password)
-      // .then(result=>{
-      //   const user = result.user;
-      //   if(user.email){
-      //     navigate(from, {replace:true})
-      //   }
-      // })
-      // .catch(error=>{
-      //   setError(error.message)
-      // })
+      signIn(email, password)
+      .then(result=>{
+        const user = result.user;
+        if(user.email){
+          navigate(from, {replace:true})
+        }
+      })
+      .catch(error=>{
+        setError(error.message)
+      })
       
     }
+
+    const googleSignIn = () =>{
+      loginWithGoogle()
+      .then(result => {
+        const user = result.user;
+        navigate(from, {replace: true})
+      })
+      .catch(err => console.log(err))
+    }
+  
+    // const githubSignIn = () =>{
+    //   loginWithGithub()
+    //   .then(result =>{
+    //     const user = result.user;
+    //     navigate(from, {replace: true})
+    //   })
+    //   .catch(err => console.log(err))
+    // }
+  
 
 
    return (
@@ -63,11 +90,11 @@ const Login = () => {
           <button  type='submit' className="btn bg-slate-600 hover:btn btn-dark w-full">Login</button>
         </div>
         <div className=" mt-0">
-          <button className="btn glass bg-slate-600 hover:btn btn-dark w-full">Login with google</button>
+          <button onClick={googleSignIn} className="btn glass bg-slate-600 hover:btn btn-dark w-full">Login with google</button>
         </div>
-        <div className="mt-0">
-          <button className="btn glass bg-slate-600 hover:btn btn-dark w-full">Login with github</button>
-        </div>
+        {/* <div className="mt-0">
+          <button onClick={githubSignIn} className="btn glass bg-slate-600 hover:btn btn-dark w-full">Login with github</button>
+        </div> */}
         
         
       </form>
