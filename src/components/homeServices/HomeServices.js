@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ServiceCard = ({ service }) => {
+const HomeServices = ({service}) => {
    const {description, img_url, price, title, _id, service_id} = service;
-  return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+   return (
+      <div className="card w-96 bg-base-100 shadow-xl">
       <figure>
         <img src={img_url} alt="" />
       </figure>
@@ -16,9 +16,8 @@ const ServiceCard = ({ service }) => {
           <button className="btn btn-primary">View Details</button>
         </div>
       </div>
-     
     </div>
-  );
+   );
 };
 
-export default ServiceCard;
+export default HomeServices;
