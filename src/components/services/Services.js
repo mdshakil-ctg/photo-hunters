@@ -5,7 +5,7 @@ import ServiceCard from '../serviceCard/ServiceCard';
 const Services = () => {
    const services = useLoaderData();
    // const [services, setServices] = useState([])
-   console.log(services)
+   // console.log(services)
 
    
    return (

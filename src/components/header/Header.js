@@ -1,12 +1,21 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
 import Logo from "../header/logo/logo.png"
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 
 const Header = () => {
-  const {user} =useContext(AuthContext);
+  const {user, logOut} =useContext(AuthContext);
+  const navigate = useNavigate();
   console.log(user)
+
+  const handleLogout = () =>{
+    logOut()
+    .then(result => {
+      navigate('/')
+    })
+    .catch(err => console.error(err))
+  }
    return (
       <div className="navbar bg-black text-white">
   <div className="navbar-start">
@@ -31,7 +40,7 @@ const Header = () => {
       <li><Link to=''>About Me</Link></li>
       <li><Link to='/blogs'>Blogs</Link></li>
       {
-        user?.uid ? <li><Link to=''><button className='btn btn-info'>Sign out</button></Link></li> 
+        user?.uid ? <li><a href='/'><button onClick={handleLogout} className='btn btn-info'>Sign out</button></a></li> 
         :
         <li><Link to='/login'><button className='btn btn-info'>Login</button></Link></li>
       }

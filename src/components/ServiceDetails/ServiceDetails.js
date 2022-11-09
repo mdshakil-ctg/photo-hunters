@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../../context/UserContext';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import SingleReview from '../singleReview/SingleReview';
 
 const ServiceDetails = () => {
-   const {title, img_url, price, description} = useLoaderData();
+   const {title, img_url, price, description, service_id} = useLoaderData();
+
+   // console.log(service_id)
+   
+   const {user} = useContext(AuthContext);
+   console.log(user)
+   
+   
+   const [reviews, setReviews] = useState([]);
+   // console.log(reviews)
+
+   useEffect(()=>{
+      fetch(`http://localhost:5000/reviews?service_id=${service_id}`)
+      .then(res => res.json())
+      .then(data => setReviews(data))
+      .catch(err => console.error(err))
+   },[service_id])
 
    const reviewHandle =(event)=>{
       event.preventDefault();
@@ -11,7 +31,7 @@ const ServiceDetails = () => {
       const comment = form.comment.value;
 
       const data = {
-         rating, comment
+         rating, comment, service_id, email: user.email, name: user.displayName, photo: user.photoURL
       }
       
       fetch('http://localhost:5000/reviews', {
@@ -25,6 +45,8 @@ const ServiceDetails = () => {
       .then(data=>{console.log(data)})
       .catch(err => console.error(err))
    }
+
+
 
    return (
       <div>
@@ -42,6 +64,7 @@ const ServiceDetails = () => {
       </div>
      
     </div>
+         <div className={user?.uid ? 'block' : 'hidden'}>
          <div>
             <h1>review section</h1>
          </div>
@@ -52,6 +75,15 @@ const ServiceDetails = () => {
             <textarea name='comment' className="textarea textarea-bordered h-24" placeholder="Your Comment"></textarea><br />
             <input type="submit" className='btn btn-info' value="Post Review" />
             </form>
+         </div>
+         </div>
+
+         <div>
+            <h1>REVIEWS</h1>
+
+            {
+               reviews.map(review=> <SingleReview key={review._id} review={review}></SingleReview>)
+            }
          </div>
       </div>
    );
