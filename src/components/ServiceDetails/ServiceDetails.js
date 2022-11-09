@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -49,15 +49,15 @@ const ServiceDetails = () => {
 
 
    return (
-      <div>
-         <div className="card w-96 bg-base-100 shadow-xl">
+      <div >
+         <div className="card bg-base-100 my-14 shadow-xl">
       <figure>
         <img src={img_url} alt="" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
-        <p>Price : {price}</p>
-        <p>{description}</p>
+        <p className='font-semibold'>Price : <span className='text-2xl text-rose-800'>{price}$</span></p>
+        <p className='text-gray-500'>{description}</p>
         {/* <div className="card-actions justify-end">
           <Link to={`/services/${_id}`}><button className="btn btn-primary">View Details</button></Link>
         </div> */}
@@ -78,8 +78,13 @@ const ServiceDetails = () => {
          </div>
          </div>
 
+         <div className={user?.uid ? 'hidden' : 'block'}>
+            <p className='text-center text-2xl'>Please <span className='text-red-300 hover:bg-gray-500 hover:px-2 rounded'><Link to='/login'>Login</Link></span> to post a review</p>
+         </div>
+
          <div>
-            <h1>REVIEWS</h1>
+            <h1 className='ml-8 text-3xl font-semibold mt-14'>
+What Our Client's Said</h1>
 
             {
                reviews.map(review=> <SingleReview key={review._id} review={review}></SingleReview>)

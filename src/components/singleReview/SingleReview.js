@@ -3,9 +3,9 @@ import { UserCircleIcon } from '@heroicons/react/24/solid';
 
 const SingleReview = ({review}) => {
    console.log(review.photo)
-   const {comment, name, email, photo, rating} = review;
+   const {comment, name, photo, rating} = review;
    return (
-      <div className="overflow-x-auto w-full">
+      <div className="overflow-x-auto w-full ml-4">
   <table className="table w-full">
     
     {/* <thead>
@@ -36,7 +36,7 @@ const SingleReview = ({review}) => {
             </div>
             <div>
               <div className="font-bold">{name}</div>
-              <div className="text-sm opacity-50">{email}</div>
+              <div className="text-sm opacity-50">{}</div>
             </div>
           </div>
         </td>
