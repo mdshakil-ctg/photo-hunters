@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AuthReview = ({review}) => {
-   const {comment, name, photo, rating, title} = review;
-   console.log(photo)
+const AuthReview = ({review, handleDelete}) => {
+   const {comment, name, photo, rating, title, _id} = review;
+   // console.log(photo)
    return (
      <div className='grid grid-cols-3 gap-6 m-9 rounded-l-lg shadow-lg p-3'>
          <div className='flex justify-start items-center'>
@@ -18,7 +18,7 @@ const AuthReview = ({review}) => {
          </div>
          <div className=' flex items-center' >
             <p>Comments : {comment}</p>
-            <button className='btn btn-info ml-4'>Edit</button>
+            <button onClick={()=>handleDelete(_id)} className='btn btn-info ml-4'>Edit</button>
             <button className='btn btn-info ml-4'>delete</button>
          </div>
      </div>
