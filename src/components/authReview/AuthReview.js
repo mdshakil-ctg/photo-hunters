@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const AuthReview = ({review, handleDelete, handleUpdate}) => {
    const {comment, name, photo, rating, title, _id} = review;
@@ -8,7 +9,7 @@ const AuthReview = ({review, handleDelete, handleUpdate}) => {
       const text = event.target.message.value;
       console.log(text)
       if(!text){
-      alert('comment should not empty')
+      toast('comment should not empty')
       }
       
    else{
@@ -36,14 +37,14 @@ const AuthReview = ({review, handleDelete, handleUpdate}) => {
             <label htmlFor="my-modal-5" className="btn">Update</label>
 
             {/* Put this part before </body> tag */}
-            <input type="checkbox" id="my-modal-5" className="modal-toggle" />
+            <input type="checkbox" id="my-modal-5" className="modal-toggle modal-open" />
             <div className="modal">
             <form onSubmit={handleForm} className="modal-box w-11/12 max-w-5xl">
                <h3 className="font-bold text-lg">Congratulations random Internet user!</h3>
                <input type="text" name='message' placeholder="Type here" className="input input-bordered input-sm w-full max-w-xs" />
                <p className="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
                <div className="modal-action">
-                  <button type='submit' className='btn btn-info'>Submit</button>
+                  <button  type='submit' className='btn btn-info'>Submit</button>
                   <label htmlFor="my-modal-5" className="btn">Close</label>
                </div>
             </form>

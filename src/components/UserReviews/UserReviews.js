@@ -65,7 +65,9 @@ const UserReviews = () => {
 
    return (
       <div>
-         <h1>total user reviews here </h1>
+         {
+           totalReviews?.length === 0 && <h1 className='text-4xl text-red-400 text-center my-10'>No reviews ar added yet! </h1>
+         }
          {
             totalReviews?.map(review => <AuthReview key={review._id} review={review} handleDelete={handleDelete} handleUpdate={handleUpdate}></AuthReview>)
          }
