@@ -3,6 +3,8 @@ import { AuthContext } from '../../context/UserContext';
 import AuthReview from '../authReview/AuthReview';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserReviews = () => {
    const {user} = useContext(AuthContext);
@@ -26,7 +28,8 @@ const UserReviews = () => {
          .then(res=>res.json())
          .then(data => {
             if(data.deletedCount > 0){
-               alert('data is deleted')
+               // alert('data is deleted')
+               toast("data deleted")
                const remaining = totalReviews.filter(review=> review._id !== id);
                setTotalReviews(remaining);
             }
@@ -66,6 +69,7 @@ const UserReviews = () => {
          {
             totalReviews?.map(review => <AuthReview key={review._id} review={review} handleDelete={handleDelete} handleUpdate={handleUpdate}></AuthReview>)
          }
+         <ToastContainer />
       </div>
    );
 };

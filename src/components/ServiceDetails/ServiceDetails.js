@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import SingleReview from '../singleReview/SingleReview';
 
+
 const ServiceDetails = () => {
    const {title, img_url, price, description, service_id} = useLoaderData();
 
