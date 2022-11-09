@@ -31,7 +31,7 @@ const ServiceDetails = () => {
       const comment = form.comment.value;
 
       const data = {
-         rating, comment, service_id, email: user.email, name: user.displayName, photo: user.photoURL
+         rating, comment, service_id, email: user.email, name: user.displayName, photo: user.photoURL, title
       }
       
       fetch('http://localhost:5000/reviews', {

@@ -35,11 +35,36 @@ const UserReviews = () => {
       }
    }
 
+  const  handleUpdate = (id, text) =>{
+      const proceed = window.confirm('Make Sure To Update');
+      if(proceed){
+         fetch(`http://localhost:5000/reviews/${id}`,{
+            method: 'PATCH',
+            headers: {
+               'content-type': 'application/json'
+            },
+            body: JSON.stringify({comment: text})
+         })
+         .then(res=>res.json())
+         .then(data=>{
+            console.log(data)
+            if(data.modifiedCount > 0){
+               const remaining = totalReviews.filter(review => review._id !== id);
+               const modified = totalReviews.find(rev => rev._id === id);
+               modified.comment = text;
+               const newReviews = [modified, ...remaining];
+               setTotalReviews(newReviews);
+            }
+         })
+         .catch(err=>console.log(err))
+      }
+   }
+
    return (
       <div>
          <h1>total user reviews here </h1>
          {
-            totalReviews?.map(review => <AuthReview key={review._id} review={review} handleDelete={handleDelete}></AuthReview>)
+            totalReviews?.map(review => <AuthReview key={review._id} review={review} handleDelete={handleDelete} handleUpdate={handleUpdate}></AuthReview>)
          }
       </div>
    );
