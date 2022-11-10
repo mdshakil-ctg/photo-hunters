@@ -39,17 +39,16 @@ const Header = () => {
       <li><Link to=''>Services</Link></li>
       <li><Link to=''>About Me</Link></li>
       <li><Link to='/blogs'>Blogs</Link></li>
-      {/* <li><Link to={`/reviews/${user?.email}`}>My Reviews</Link></li> */}
       <li><Link to='/reviews'>My Reviews</Link></li>
+
       {
         user?.uid ? <>
-        <li><Link to=''>Add Services</Link></li>
+        <li><Link to='/addServices'>Add Services</Link></li>
         <li><a href='/'><button onClick={handleLogout} className='btn btn-info'>Sign out</button></a></li>
         </> 
         :
         <li><Link to='/login'><button className='btn btn-info'>Login</button></Link></li>
       }
-      
       
     </ul>
     <div>

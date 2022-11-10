@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import AddServices from "../components/AddServices/AddServices";
 import Blogs from "../components/Blogs/Blogs";
 import Home from "../components/Home/Home";
 import Login from "../components/Login/Login";
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
          {
             path: '/blogs',
             element: <Blogs></Blogs>
+         },
+         {
+            path: '/addServices',
+            element: <PrivateRoute><AddServices></AddServices></PrivateRoute>
          }
          // {
          //    path:'/reviews/:email',
