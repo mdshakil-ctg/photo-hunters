@@ -1,9 +1,12 @@
 import React from "react";
+import useTitle from './../../hooks/useTitle';
 
 const About = () => {
+
+  useTitle("About Me")
   return (
    
-    <div>
+    <div id="about">
       <h1 className="text-5xl text-center">About Me</h1>
       <div className="flex flex-col lg:flex-row gap-5 mt-10">
       <div className="w-1/2">

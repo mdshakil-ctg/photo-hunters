@@ -5,9 +5,12 @@ import HomeServices from "../homeServices/HomeServices";
 import { Link } from "react-router-dom";
 import About from "../About/About";
 import Features from "../Features/Features";
+import useTitle from "../../hooks/useTitle";
 
 const Home = () => {
   const [services, setServices] = useState([]);
+
+  useTitle("Home")
 
   useEffect(() => {
     fetch("http://localhost:5000/home/services")

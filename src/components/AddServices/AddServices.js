@@ -1,8 +1,11 @@
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useTitle from '../../hooks/useTitle';
 
 const AddServices = () => {
+
+    useTitle('Add Services')
 
    const handleSubmit = event =>{
       event.preventDefault();

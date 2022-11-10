@@ -5,11 +5,15 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useTitle from '../../hooks/useTitle';
+
+
 
 const UserReviews = () => {
    const {user} = useContext(AuthContext);
    const [totalReviews, setTotalReviews] = useState();
-
+   
+   useTitle('My Reviews')
  
    useEffect(()=>{
       fetch(`http://localhost:5000/reviews/${user.email}`)
