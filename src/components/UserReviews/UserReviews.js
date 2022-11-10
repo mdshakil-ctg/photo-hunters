@@ -10,17 +10,26 @@ import useTitle from '../../hooks/useTitle';
 
 
 const UserReviews = () => {
-   const {user} = useContext(AuthContext);
+   const {user, logOut} = useContext(AuthContext);
    const [totalReviews, setTotalReviews] = useState();
    
    useTitle('My Reviews')
  
    useEffect(()=>{
-      fetch(`http://localhost:5000/reviews/${user.email}`)
-      .then(res=>res.json())
+      fetch(`http://localhost:5000/reviews/${user.email}`, {
+         headers: {
+            authorization : `Bearer ${localStorage.getItem('photo-hunters-token')}`
+         }
+      })
+      .then(res=>{
+         if(res.status === 401 || res.status === 403){
+            logOut()
+         }
+         return res.json()
+      })
       .then(data => setTotalReviews(data))
       .catch(err => console.error(err))
-   },[user?.email])
+   },[user?.email, logOut])
   
    const handleDelete = id =>{
       console.log(id)

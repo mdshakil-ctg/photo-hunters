@@ -24,6 +24,7 @@ const Home = () => {
  
   return (
     <div>
+      
       <Carousel></Carousel>
       <div className="grid lg:grid-cols-3 mt-24 mb-7">
         {services.map((service) => (
