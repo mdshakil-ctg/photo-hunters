@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/UserContext';
 
 const Register = () => {
 
-   const {createUser, setUser} = useContext(AuthContext)
+   const {createUser} = useContext(AuthContext)
    const navigate = useNavigate();
-   
-
+   const location = useLocation();
+   const from = location?.state?.from?.pathname || '/';
    const handleRegister = (event) =>{
      
      event.preventDefault();
@@ -19,11 +19,26 @@ const Register = () => {
       console.log(name,photo,email, password)
 
       createUser(email, password)
-      .then(result =>{
-         const user = result.user;
-         console.log(user)
-         setUser(user);
-         navigate('/');
+      .then(result=>{
+        const user = result.user;
+
+        const currentUser = {
+          email: user.email
+        }
+        fetch('https://photo-hunters-server.vercel.app/jwt', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(currentUser)
+        })
+        .then(res =>res.json())
+        .then(data=> {
+          localStorage.setItem('photo-hunters-token' , data.token)
+          navigate(from, {replace:true})
+        })
+        .catch(err => console.error(err))
+
       })
       .catch(err=>console.log(err))
 

@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || '/';
-  const {loginWithGoogle, loginWithGithub, signIn, logOut,} = useContext(AuthContext);
+  const {loginWithGoogle, signIn} = useContext(AuthContext);
 
   const [error, setError] = useState(null);
 
@@ -23,11 +23,11 @@ const Login = () => {
       signIn(email, password)
       .then(result=>{
         const user = result.user;
-
+        form.reset()
         const currentUser = {
           email: user.email
         }
-        fetch('http://localhost:5000/jwt', {
+        fetch('https://photo-hunters-server.vercel.app/jwt', {
           method: 'POST',
           headers: {
             'content-type': 'application/json'
@@ -44,34 +44,43 @@ const Login = () => {
       })
       .catch(error=>{
         setError(error.message)
+        form.reset()
       })
       
     }
 
     const googleSignIn = () =>{
       loginWithGoogle()
-      .then(result => {
+      
+      .then(result=>{
         const user = result.user;
-        navigate(from, {replace: true})
+
+        const currentUser = {
+          email: user.email
+        }
+        fetch('https://photo-hunters-server.vercel.app/jwt', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(currentUser)
+        })
+        .then(res =>res.json())
+        .then(data=> {
+          localStorage.setItem('photo-hunters-token' , data.token)
+          navigate(from || '/', {replace:true})
+        })
+        .catch(err => console.error(err))
+
       })
       .catch(err => console.log(err))
     }
   
-    // const githubSignIn = () =>{
-    //   loginWithGithub()
-    //   .then(result =>{
-    //     const user = result.user;
-    //     navigate(from, {replace: true})
-    //   })
-    //   .catch(err => console.log(err))
-    // }
-  
-
 
    return (
       <div>
          
-         <div className="hero min-h-screen bg-base-200">
+         <div className="hero min-h-[80vh] md:min-h-screen bg-base-200">
   <div className="hero-content flex-col ">
     <div className="text-center">
       <h1 className="text-5xl font-bold">Login now!</h1>
@@ -96,23 +105,18 @@ const Login = () => {
           <label className="label">
             <p><small>Don't Have an Account?</small> <Link to='/register' className="label-text-alt link link-hover font-bold">Register Here</Link></p>
           </label>
-            {/* <div className='text-danger'>
+            <div className='text-danger'>
             {
-              error && <p>{error}</p>
+              error && <p className='text-red-600 font-bold'>{error}</p>
             }
-            </div> */}
+            </div>
         </div>
         <div className="mt-0">
           <button  type='submit' className="btn bg-slate-600 hover:btn btn-dark w-full">Login</button>
         </div>
         <div className=" mt-0">
           <button onClick={googleSignIn} className="btn glass bg-slate-600 hover:btn btn-dark w-full">Login with google</button>
-        </div>
-        {/* <div className="mt-0">
-          <button onClick={githubSignIn} className="btn glass bg-slate-600 hover:btn btn-dark w-full">Login with github</button>
-        </div> */}
-        
-        
+        </div>        
       </form>
     </div>
   </div>

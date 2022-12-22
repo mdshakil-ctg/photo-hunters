@@ -36,6 +36,7 @@ const UserContext = ({children}) => {
    }
 
    const logOut = () =>{
+      localStorage.removeItem('photo-hunters-token');
       setLoading(true);
       return signOut(auth);
    }

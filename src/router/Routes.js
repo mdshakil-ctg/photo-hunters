@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
          {
             path:'/services',
             element: <Services></Services>,
-            loader: ()=> fetch('http://localhost:5000/services')
+            loader: ()=> fetch('https://photo-hunters-server.vercel.app/services')
          },
          {
             path:'/login',
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
          {
             path:'/services/:id',
             element: <ServiceDetails></ServiceDetails>,
-            loader: ({params})=> fetch(`http://localhost:5000/services/${params.id}`)
+            loader: ({params})=> fetch(`https://photo-hunters-server.vercel.app/services/${params.id}`)
          },
          {
             path: '/reviews',
@@ -49,11 +49,11 @@ export const router = createBrowserRouter([
             path: '/addServices',
             element: <PrivateRoute><AddServices></AddServices></PrivateRoute>
          }
-         // {
-         //    path:'/reviews/:email',
-         //    element: <PrivateRoute><UserReviews></UserReviews></PrivateRoute>,
-         //    loader: ({params}) => fetch(`http://localhost:5000/reviews/${params.email}`)
-         // }
+         
       ]
    },
+   {
+      path: '*',
+      element: <div className="text-center text-red-500 text-5xl mt-10">Sorry Route is not found!!!</div>
+   }
 ])

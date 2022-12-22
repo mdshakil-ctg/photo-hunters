@@ -16,7 +16,7 @@ const UserReviews = () => {
    useTitle('My Reviews')
  
    useEffect(()=>{
-      fetch(`http://localhost:5000/reviews/${user.email}`, {
+      fetch(`https://photo-hunters-server.vercel.app/reviews/${user.email}`, {
          headers: {
             authorization : `Bearer ${localStorage.getItem('photo-hunters-token')}`
          }
@@ -35,13 +35,13 @@ const UserReviews = () => {
       console.log(id)
       const proceed = window.confirm('Are You Confirm To Delete?');
       if(proceed){
-         fetch(`http://localhost:5000/reviews/${id}`,{
+         fetch(`https://photo-hunters-server.vercel.app/reviews/${id}`,{
             method: 'DELETE'
          })
          .then(res=>res.json())
          .then(data => {
             if(data.deletedCount > 0){
-               // alert('data is deleted')
+               
                toast("data deleted")
                const remaining = totalReviews.filter(review=> review._id !== id);
                setTotalReviews(remaining);
@@ -54,7 +54,7 @@ const UserReviews = () => {
   const  handleUpdate = (id, text) =>{
       const proceed = window.confirm('Make Sure To Update');
       if(proceed){
-         fetch(`http://localhost:5000/reviews/${id}`,{
+         fetch(`https://photo-hunters-server.vercel.app/reviews/${id}`,{
             method: 'PATCH',
             headers: {
                'content-type': 'application/json'
@@ -65,6 +65,7 @@ const UserReviews = () => {
          .then(data=>{
             console.log(data)
             if(data.modifiedCount > 0){
+               toast('Your Comment Updated Succesfully')
                const remaining = totalReviews.filter(review => review._id !== id);
                const modified = totalReviews.find(rev => rev._id === id);
                modified.comment = text;
@@ -79,11 +80,16 @@ const UserReviews = () => {
    return (
       <div>
          {
+            totalReviews?.length !== 0 && <h3 className='text-center text-4xl text-yellow-500 mt-10'>All Reviews Here</h3>
+         }
+         {
            totalReviews?.length === 0 && <h1 className='text-4xl text-red-400 text-center my-10'>No reviews ar added yet! </h1>
          }
+         <div className='grid grid-cols-1 gap-7'>
          {
             totalReviews?.map(review => <AuthReview key={review._id} review={review} handleDelete={handleDelete} handleUpdate={handleUpdate}></AuthReview>)
          }
+         </div>
          <ToastContainer />
       </div>
    );

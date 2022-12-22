@@ -22,7 +22,7 @@ const AddServices = () => {
          title, price, description, img_url, time
       }
       
-      fetch('http://localhost:5000/create-service', {
+      fetch('https://photo-hunters-server.vercel.app/create-service', {
          method: 'POST',
          headers:{
             'content-type': 'application/json'
@@ -53,27 +53,27 @@ const AddServices = () => {
           <label className="label">
             <span className="label-text"></span>
           </label>
-          <input type="text" name='title' placeholder="Service Title" className="input input-bordered" />
+          <input required type="text" name='title' placeholder="Service Title" className="input input-bordered" />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text"></span>
           </label>
-          <input type="text" name='price' placeholder="Service Price" className="input input-bordered" />
+          <input required type="text" name='price' placeholder="Service Price" className="input input-bordered" />
           
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text"></span>
           </label>
-          <input type="text" name='description' placeholder="Short Description" className="input input-bordered" />
+          <input required type="text" name='description' placeholder="Short Description" className="input input-bordered" />
           
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text"></span>
           </label>
-          <input type="text" name='image' placeholder="Image Url" className="input input-bordered" />
+          <input required type="text" name='image' placeholder="Image Url" className="input input-bordered" />
           
         </div>
         <div className="form-control mt-6">
